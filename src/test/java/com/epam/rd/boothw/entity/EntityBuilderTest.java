@@ -1,4 +1,4 @@
-package com.epam.rd.boothw;
+package com.epam.rd.boothw.entity;
 
 import com.epam.rd.boothw.entity.Author;
 import com.epam.rd.boothw.entity.Book;
@@ -16,7 +16,7 @@ public class EntityBuilderTest {
         String authorName = "J.R.R. Tolkien";
         String bookTitle = "The Lord of the Rings";
         Book book = Book.builder()
-                .withTitle(authorName)
+                .withTitle(bookTitle)
                 .withAuthor(new Author(authorName))
                 .build();
         assertEquals(authorName, book.getAuthor().getName());
