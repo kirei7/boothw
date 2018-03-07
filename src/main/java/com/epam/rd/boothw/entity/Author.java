@@ -1,6 +1,9 @@
 package com.epam.rd.boothw.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.Singular;
 
@@ -9,6 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
+@EqualsAndHashCode(exclude = {"name", "books"})
 @NoArgsConstructor
 @Entity
 @Table(name="author")
@@ -17,12 +21,18 @@ public class Author {
     @GeneratedValue
     private Long id;
     private String name;
-    @Singular
-    @OneToMany(mappedBy = "author")
-    private Set<Book> books;
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    private Set<Book> books = new HashSet<>();
 
     public Author(String name) {
         this.name = name;
+    }
+
+    public void addBook(Book book) {
+        books.add(book);
+    }
+    public boolean removeBook(Book book) {
+        return books.remove(book);
     }
 
     public static AuthorBuilder builder() {

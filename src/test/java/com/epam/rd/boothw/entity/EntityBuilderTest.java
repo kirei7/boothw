@@ -25,8 +25,8 @@ public class EntityBuilderTest {
 
     @Test
     public void authorEntityWorking() {
-        Book book1 = new Book("Hard to be a God");
-        Book book2 = new Book("Roadside Picnic");
+        Book book1 = new Book("Hard to be a God", null);
+        Book book2 = new Book("Roadside Picnic", null);
         String authorName = "The Strugatsky brothers";
         Author author1 = Author.builder()
                 .withName(authorName)
