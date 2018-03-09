@@ -2,13 +2,17 @@ package com.epam.rd.boothw.dto;
 
 import com.epam.rd.boothw.entity.Book;
 
-public class BookMapper {
-    public static Book bookFromDto(BookDto bookDto) {
-        return new Book(bookDto.getTitle(), null);
-    }
-    public static BookDto dtoFromBook(Book book) {
+public class BookMapper implements DtoMapper<BookDto, Book>{
+
+    @Override
+    public BookDto dtoFromObject(Book object) {
         return new BookDto(
-                book.getTitle(),
-                book.getAuthor() == null ? null : book.getAuthor().getName());
+                object.getTitle(),
+                object.getAuthor() == null ? null : object.getAuthor().getName());
+    }
+
+    @Override
+    public Book objectFromDto(BookDto dto) {
+        return new Book(dto.getTitle(), null);
     }
 }

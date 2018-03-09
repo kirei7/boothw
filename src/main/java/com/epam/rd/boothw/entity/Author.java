@@ -1,11 +1,8 @@
 package com.epam.rd.boothw.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.Singular;
 
 import javax.persistence.*;
 import java.util.HashSet;
