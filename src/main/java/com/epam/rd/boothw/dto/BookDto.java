@@ -1,11 +1,9 @@
 package com.epam.rd.boothw.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class BookDto {
     private String title;

@@ -4,10 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthorDto {
+    private Long id;
     private String name;
-    private String[] bookTitles;
+    private Set<BookDto> books;
 }
