@@ -28,10 +28,10 @@ public class BookController {
         this.validator = validator;
     }
 
-    @InitBinder
+    /*@InitBinder
     private void initBinder(WebDataBinder binder) {
         binder.setValidator(validator);
-    }
+    }*/
 
     @RequestMapping("/books")
     public List<BookDto> getAllBooks() {
@@ -45,7 +45,7 @@ public class BookController {
     }
 
     @RequestMapping(path = "/authors/{id}/books", method = RequestMethod.POST)
-    public BookDto addBookToAuthor(@PathVariable Long id, @RequestBody @Validated BookDto bookDto) {
+    public BookDto addBookToAuthor(@PathVariable Long id, @RequestBody BookDto bookDto) {
         Book added = bookService.addBookToAuthor(id, bookMapper.objectFromDto(bookDto));
         return bookMapper.dtoFromObject(added);
     }
