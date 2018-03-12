@@ -4,7 +4,10 @@ import com.epam.rd.boothw.dto.AuthorDto;
 import com.epam.rd.boothw.dto.DtoMapper;
 import com.epam.rd.boothw.service.AuthorService;
 import com.epam.rd.boothw.entity.Author;
+import com.epam.rd.boothw.util.validation.AuthorDtoValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,11 +19,18 @@ public class AuthorController {
 
     private AuthorService authorService;
     private DtoMapper<AuthorDto, Author> authorMapper;
+    private AuthorDtoValidator validator;
 
     @Autowired
-    public AuthorController(AuthorService authorService, DtoMapper<AuthorDto, Author> authorMapper) {
+    public AuthorController(AuthorService authorService, DtoMapper<AuthorDto, Author> authorMapper, AuthorDtoValidator validator) {
         this.authorService = authorService;
         this.authorMapper = authorMapper;
+        this.validator = validator;
+    }
+
+    @InitBinder
+    private void initBinder(WebDataBinder binder) {
+        binder.setValidator(validator);
     }
 
     @RequestMapping
@@ -33,7 +43,7 @@ public class AuthorController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public AuthorDto createAuthor(@RequestBody Author author) {
+    public AuthorDto createAuthor(@RequestBody @Validated Author author) {
         return authorMapper.dtoFromObject(authorService.save(author));
     }
 
