@@ -1,11 +1,13 @@
 package com.epam.rd.boothw.controller;
 
-import com.epam.rd.boothw.dto.BookMapper;
 import com.epam.rd.boothw.dto.DtoMapper;
 import com.epam.rd.boothw.entity.Book;
 import com.epam.rd.boothw.service.BookService;
 import com.epam.rd.boothw.dto.BookDto;
+import com.epam.rd.boothw.util.validation.BookDtoValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,11 +19,18 @@ public class BookController {
 
     private BookService bookService;
     private DtoMapper<BookDto, Book> bookMapper;
+    private BookDtoValidator validator;
 
     @Autowired
-    public BookController(BookService bookService, DtoMapper<BookDto, Book> bookMapper) {
+    public BookController(BookService bookService, DtoMapper<BookDto, Book> bookMapper, BookDtoValidator validator) {
         this.bookService = bookService;
         this.bookMapper = bookMapper;
+        this.validator = validator;
+    }
+
+    @InitBinder
+    private void initBinder(WebDataBinder binder) {
+        binder.setValidator(validator);
     }
 
     @RequestMapping("/books")
@@ -36,7 +45,7 @@ public class BookController {
     }
 
     @RequestMapping(path = "/authors/{id}/books", method = RequestMethod.POST)
-    public BookDto addBookToAuthor(@PathVariable Long id, @RequestBody BookDto bookDto) {
+    public BookDto addBookToAuthor(@PathVariable Long id, @RequestBody @Validated BookDto bookDto) {
         Book added = bookService.addBookToAuthor(id, bookMapper.objectFromDto(bookDto));
         return bookMapper.dtoFromObject(added);
     }
