@@ -1,6 +1,6 @@
 package com.epam.rd.boothw.config;
 
-import com.epam.rd.boothw.util.validation.AuthorDtoValidator;
+import com.epam.rd.boothw.util.validation.AuthorValidator;
 import com.epam.rd.boothw.util.validation.BookDtoValidator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -17,8 +17,8 @@ public class ValidationConfig {
 
 
     @Bean
-    public AuthorDtoValidator authorDtoValidator() {
-        return new AuthorDtoValidator(authorNamePattern);
+    public AuthorValidator authorDtoValidator() {
+        return new AuthorValidator(authorNamePattern);
     }
     @Bean
     public BookDtoValidator bookDtoValidator() {
