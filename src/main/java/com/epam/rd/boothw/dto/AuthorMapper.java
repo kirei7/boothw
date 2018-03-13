@@ -1,20 +1,27 @@
 package com.epam.rd.boothw.dto;
 
 import com.epam.rd.boothw.entity.Author;
-import com.epam.rd.boothw.entity.Book;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class AuthorMapper implements DtoMapper<AuthorDto, Author> {
+
+    private BookMapper bookMapper;
+
+    public AuthorMapper(BookMapper bookMapper) {
+        this.bookMapper = bookMapper;
+    }
+
 
     @Override
     public AuthorDto dtoFromObject(Author object) {
         Set set = object.getBooks();
-        String[] authorBooks = object.getBooks()
+        Set<BookDto> authorBooks = object.getBooks()
                 .stream()
-                .map(Book::getTitle)
-                .toArray(String[]::new);
-        return new AuthorDto(object.getName(),authorBooks);
+                .map(book -> bookMapper.dtoFromObject(book))
+                .collect(Collectors.toSet());
+        return new AuthorDto(object.getId(), object.getName(),authorBooks);
     }
 
     @Override

@@ -17,7 +17,7 @@ public class AppConfig {
     }
     @Bean
     public DtoMapper<AuthorDto, Author> authorDtoMapper() {
-        return new AuthorMapper();
+        return new AuthorMapper((BookMapper) bookDtoMapper());
     }
 
 }

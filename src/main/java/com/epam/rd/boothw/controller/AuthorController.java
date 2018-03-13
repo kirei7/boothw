@@ -28,10 +28,10 @@ public class AuthorController {
         this.validator = validator;
     }
 
-    @InitBinder
+    /*@InitBinder
     private void initBinder(WebDataBinder binder) {
         binder.setValidator(validator);
-    }
+    }*/
 
     @RequestMapping
     public List<AuthorDto> getAllAuthors() {
@@ -43,7 +43,7 @@ public class AuthorController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public AuthorDto createAuthor(@RequestBody @Validated Author author) {
+    public AuthorDto createAuthor(@RequestBody Author author) {
         return authorMapper.dtoFromObject(authorService.save(author));
     }
 
