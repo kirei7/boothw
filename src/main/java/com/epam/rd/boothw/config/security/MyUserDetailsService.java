@@ -6,22 +6,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.annotation.PostConstruct;
 
-@Service
 public class MyUserDetailsService implements UserDetailsService {
 
-    @Autowired
     private UserRepository userRepository;
+    private PasswordEncoder encoder;
+
+    @Autowired
+    public MyUserDetailsService(UserRepository userRepository, PasswordEncoder encoder) {
+        this.userRepository = userRepository;
+        this.encoder = encoder;
+    }
 
     @PostConstruct
     public void createDefaultUser() {
         String defaultUserName = "user";
+        String defaultPassword = "password";
         User defaultUSer = userRepository.findByUsername(defaultUserName);
         if (defaultUSer == null)
-            userRepository.save(new User(null, defaultUserName, "password"));
+            userRepository.save(new User(null, defaultUserName, encoder.encode(defaultPassword)));
     }
 
     @Override

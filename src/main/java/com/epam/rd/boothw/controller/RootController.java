@@ -8,6 +8,8 @@ import com.epam.rd.boothw.service.AuthorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,11 +31,18 @@ public class RootController {
     }
 
     @RequestMapping
-    public String welcomePage(Map<String, Object> model) {
-        LOGGER.info("Welcome page requested.");
+    public String welcomePage() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        return "index";
+    }
+
+    @RequestMapping("/catalogue")
+    public String cataloguePage(Map<String, Object> model) {
+        LOGGER.info("Catalogue page requested.");
         model.put("authors", authorService.findAll());
         model.put("newAuthor", new AuthorDto());
-        return "index";
+        return "authors-list";
     }
 
     @RequestMapping("/author/{id}")

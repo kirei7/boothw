@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
-@Import({ValidationConfig.class, SecurityConfig.class})
+@Import({ValidationConfig.class})
 public class AppConfig {
     @Bean
     public DtoMapper<BookDto, Book> bookDtoMapper() {
