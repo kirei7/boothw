@@ -1,0 +1,8 @@
+package com.epam.rd.boothw.repository;
+
+import com.epam.rd.boothw.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<User, Long> {
+    User findByUsername(String username);
+}
